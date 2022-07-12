@@ -41,7 +41,7 @@ func handleUnbalanced(left []islander, right []islander, onTheSide []islander, r
 	if result == "left" {
 		return handleUnbalancedLeftHeavy(left, right, onTheSide)
 	} else if result == "right" {
-		// go around the seesaw to make sure the heavy side is on your left :P... i.e pass in right as left and left as right
+		// make sure you have the heavy side on the left... i.e pass in right as left and left as right
 		return handleUnbalancedLeftHeavy(right, left, onTheSide)
 	}
 	return simres{islander{}, "", numberOfSeesawMeasurements}

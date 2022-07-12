@@ -56,7 +56,7 @@ we weigh S1 against S2. if balanced it is S3 - else it is the lighter of S1 and 
 
 2.B if unbalanced  
 
-*(first make sure you have the heavy side on the left...go around the seesaw and look at it from the other side if you have to :) )*  
+*(first make sure you have the heavy side on the left...)*  
 
 seesaw: L1 L2 L3 L4 (heavy)      R1 R2 R3 R4  
 sideline: S1 S2 S3 S4  
