@@ -40,7 +40,7 @@ func findOddIslander(islanders []islander) simres {
 		return handleLeftHeavy(right, left, sideline)
 	}
 }
-func handleLeftHeavy(left, right []islander, sideline []islander) simres {
+func handleLeftHeavy(left, right, sideline []islander) simres {
 	// seesaw: L1 L2 L3 L4 (heavy)      R1 R2 R3 R4
 	// sideline: S1 S2 S3 S4
 	// now switch R1 R2 R3 and S2 S3 S4 AND switch R1 AND L1
@@ -96,7 +96,7 @@ func handleLeftHeavy(left, right []islander, sideline []islander) simres {
 		}
 	}
 }
-func handleBalanced(left []islander, right []islander, sideline []islander) simres {
+func handleBalanced(left, right, sideline []islander) simres {
 	// seesaw: L1 L2 L3 L4   R1 R2 R3 R4 (balanced)
 	// sideline: S1 S2 S3 S4
 	// now compare S1 S2 S3 with R1 R2 R3
@@ -160,7 +160,7 @@ func initIslanders() []islander {
 
 	return islanders
 }
-func getRandomNumber(min int, max int) int {
+func getRandomNumber(min, max int) int {
 	rand.Seed(time.Now().UnixNano())
 	rndNumb := rand.Intn(max-min) + min
 	if rndNumb == defaultWeight {
@@ -169,7 +169,7 @@ func getRandomNumber(min int, max int) int {
 	return rndNumb
 }
 
-func seesaw(left []islander, right []islander) string {
+func seesaw(left, right []islander) string {
 	numberOfSeesawMeasurements++
 	leftTotaltWeight := 0
 	for _, islander := range left {
