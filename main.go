@@ -49,7 +49,7 @@ func handleUnbalanced(left []islander, right []islander, onTheSide []islander, r
 func handleUnbalancedLeftHeavy(left, right []islander, onTheSide []islander) simres {
 	// L1 L2 L3 L4 (heavy)      R1 R2 R3 R4
 	// S1 S2 S3 S4
-	// now swith R1 R2 R3 and S2 S3 S4 AND switch R1 AND L1
+	// now switch R1 R2 R3 and S2 S3 S4 AND switch R1 AND L1
 	left2 := []islander{right[0], left[1], left[2], left[3]}
 	right2 := []islander{left[0], onTheSide[1], onTheSide[2], onTheSide[3]}
 	onTheSide2 := []islander{onTheSide[0], right[1], right[2], right[3]}
