@@ -40,6 +40,56 @@ func findOddIslander(islanders []islander) simres {
 		return handleLeftHeavy(right, left, sideline)
 	}
 }
+func handleBalanced(left, right, sideline []islander) simres {
+	// seesaw: L1 L2 L3 L4   R1 R2 R3 R4 (balanced)
+	// sideline: S1 S2 S3 S4
+	// now compare S1 S2 S3 with R1 R2 R3
+	left2 := sideline[:3]
+	right2 := right[:3]
+	result2 := seesaw(left2, right2)
+
+	if result2 == "balanced" {
+		// seesaw: S1 S2 S3  R1 R2 R3  (balanced)
+		// sideline: L1 L2 L3 S4 L4 R4
+		left21 := []islander{sideline[3]}
+		right21 := []islander{left2[0]}
+		// compare S4 with neutral L1
+		result21 := seesaw(left21, right21)
+		if result21 == "left" {
+			return simres{sideline[3], "heavy", numberOfSeesawMeasurements} // heavy S4
+		} else {
+			return simres{sideline[3], "light", numberOfSeesawMeasurements} // light S4
+		}
+	} else if result2 == "left" {
+		// seesaw: S1 S2 S3 (heavy)  R1 R2 R3
+		// sideline: L1 L2 L3 S4 L4 R4
+		left22 := []islander{left2[0]}
+		right22 := []islander{left2[1]}
+		// compare S1 with S2
+		result22 := seesaw(left22, right22)
+		if result22 == "balanced" {
+			return simres{left2[2], "heavy", numberOfSeesawMeasurements} // S3
+		} else if result22 == "left" {
+			return simres{left22[0], "heavy", numberOfSeesawMeasurements} // S1
+		} else {
+			return simres{right22[0], "heavy", numberOfSeesawMeasurements} // S2
+		}
+	} else {
+		// seesaw: S1 S2 S3  R1 R2 R3 (heavy)
+		// sideline: L1 L2 L3 S4 L4 R4
+		left23 := []islander{left2[0]}
+		right23 := []islander{left2[1]}
+		// compare S1 and S2
+		result23 := seesaw(left23, right23)
+		if result23 == "balanced" {
+			return simres{left2[2], "light", numberOfSeesawMeasurements} // S3
+		} else if result23 == "left" {
+			return simres{right23[0], "light", numberOfSeesawMeasurements} // S2
+		} else {
+			return simres{left23[0], "light", numberOfSeesawMeasurements} // S1
+		}
+	}
+}
 func handleLeftHeavy(left, right, sideline []islander) simres {
 	// seesaw: L1 L2 L3 L4 (heavy)      R1 R2 R3 R4
 	// sideline: S1 S2 S3 S4
@@ -93,56 +143,6 @@ func handleLeftHeavy(left, right, sideline []islander) simres {
 			return simres{right2[0], "heavy", numberOfSeesawMeasurements} // L1
 		} else {
 			return simres{left23[0], "light", numberOfSeesawMeasurements} // R1
-		}
-	}
-}
-func handleBalanced(left, right, sideline []islander) simres {
-	// seesaw: L1 L2 L3 L4   R1 R2 R3 R4 (balanced)
-	// sideline: S1 S2 S3 S4
-	// now compare S1 S2 S3 with R1 R2 R3
-	left2 := sideline[:3]
-	right2 := right[:3]
-	result2 := seesaw(left2, right2)
-
-	if result2 == "balanced" {
-		// seesaw: S1 S2 S3  R1 R2 R3  (balanced)
-		// sideline: L1 L2 L3 S4 L4 R4
-		left21 := []islander{sideline[3]}
-		right21 := []islander{left2[0]}
-		// compare S4 with neutral L1
-		result21 := seesaw(left21, right21)
-		if result21 == "left" {
-			return simres{sideline[3], "heavy", numberOfSeesawMeasurements} // heavy S4
-		} else {
-			return simres{sideline[3], "light", numberOfSeesawMeasurements} // light S4
-		}
-	} else if result2 == "left" {
-		// seesaw: S1 S2 S3 (heavy)  R1 R2 R3
-		// sideline: L1 L2 L3 S4 L4 R4
-		left22 := []islander{left2[0]}
-		right22 := []islander{left2[1]}
-		// compare S1 with S2
-		result22 := seesaw(left22, right22)
-		if result22 == "balanced" {
-			return simres{left2[2], "heavy", numberOfSeesawMeasurements} // S3
-		} else if result22 == "left" {
-			return simres{left22[0], "heavy", numberOfSeesawMeasurements} // S1
-		} else {
-			return simres{right22[0], "heavy", numberOfSeesawMeasurements} // S2
-		}
-	} else {
-		// seesaw: S1 S2 S3  R1 R2 R3 (heavy)
-		// sideline: L1 L2 L3 S4 L4 R4
-		left23 := []islander{left2[0]}
-		right23 := []islander{left2[1]}
-		// compare S1 and S2
-		result23 := seesaw(left23, right23)
-		if result23 == "balanced" {
-			return simres{left2[2], "light", numberOfSeesawMeasurements} // S3
-		} else if result23 == "left" {
-			return simres{right23[0], "light", numberOfSeesawMeasurements} // S2
-		} else {
-			return simres{left23[0], "light", numberOfSeesawMeasurements} // S1
 		}
 	}
 }
