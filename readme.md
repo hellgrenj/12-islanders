@@ -61,7 +61,7 @@ we weigh S1 against S2. if balanced it is S3 - else it is the lighter of S1 and 
 seesaw: L1 L2 L3 L4 (heavy)      R1 R2 R3 R4  
 sideline: S1 S2 S3 S4  
 
-now swith R1 R2 R3 and S2 S3 S4 AND switch R1 AND L1. 
+now switch R1 R2 R3 and S2 S3 S4 AND switch R1 AND L1. 
 
 (seesaw measurement number 2)
 
