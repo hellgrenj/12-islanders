@@ -10,8 +10,6 @@ func TestFindOddIslander(t *testing.T) {
 
 	t.Logf("\n cases when one islander is light")
 	for i := 0; i < 12; i++ { // test all variants of lighter
-		// reset seesaw
-		numberOfSeesawMeasurements = 0
 		islanders := getTestIslanders(i, 80)
 		result := findOddIslander(islanders)
 		t.Logf("found %s islander %v (weight: %v) with %v seesaw measurements\n", result.diff, result.islander.name, result.islander.weight, result.numberOfSeesawMeasurements)
@@ -30,9 +28,6 @@ func TestFindOddIslander(t *testing.T) {
 	}
 	t.Logf("\n\n cases when one islander is heavy")
 	for i := 0; i < 12; i++ { // test all variants of heavier
-
-		// reset seesaw
-		numberOfSeesawMeasurements = 0
 		islanders := getTestIslanders(i, 120)
 		result := findOddIslander(islanders)
 		t.Logf("found %s islander %v (weight: %v) with %v seesaw measurements\n", result.diff, result.islander.name, result.islander.weight, result.numberOfSeesawMeasurements)

@@ -8,7 +8,7 @@ import (
 
 const defaultWeight = 100
 
-var numberOfSeesawMeasurements = 0
+var numberOfSeesawMeasurements int
 
 type islander struct {
 	name   string
@@ -26,6 +26,7 @@ func main() {
 	fmt.Printf("found %s islander %v (weight: %v) with %v seesaw measurements\n", result.diff, result.islander.name, result.islander.weight, result.numberOfSeesawMeasurements)
 }
 func findOddIslander(islanders []islander) simres {
+	numberOfSeesawMeasurements = 0
 	fmt.Printf("the islanders are: %v\n", islanders)
 	left := islanders[:4]       // L1 L2 L3 L4 (named after starting position)
 	right := islanders[4:8]     // R1 R2 R3 R4 (named after starting position)
@@ -38,6 +39,47 @@ func findOddIslander(islanders []islander) simres {
 	} else { // right
 		// make sure you have the heavy side on the left... i.e pass in right as left and left as right
 		return handleLeftHeavy(right, left, sideline)
+	}
+}
+func initIslanders() []islander {
+	var islanders []islander
+	for i := 0; i < 12; i++ {
+		newIslander := islander{
+			name:   fmt.Sprintf(("%d"), i+1),
+			weight: defaultWeight,
+		}
+		islanders = append(islanders, newIslander)
+	}
+	// make a random islander randomly heavier or lighter
+	islanders[getRandomNumber(0, len(islanders))].weight = getRandomNumber(80, 120)
+
+	return islanders
+}
+func getRandomNumber(min, max int) int {
+	rand.Seed(time.Now().UnixNano())
+	rndNumb := rand.Intn(max-min) + min
+	if rndNumb == defaultWeight {
+		rndNumb = getRandomNumber(min, max) // dont let it be the same as the default weight
+	}
+	return rndNumb
+}
+
+func seesaw(left, right []islander) string {
+	numberOfSeesawMeasurements++
+	leftTotaltWeight := 0
+	for _, islander := range left {
+		leftTotaltWeight += islander.weight
+	}
+	rightTotaltWeight := 0
+	for _, islander := range right {
+		rightTotaltWeight += islander.weight
+	}
+	if leftTotaltWeight == rightTotaltWeight {
+		return "balanced"
+	} else if leftTotaltWeight > rightTotaltWeight {
+		return "left"
+	} else {
+		return "right"
 	}
 }
 func handleBalanced(left, right, sideline []islander) simres {
@@ -144,46 +186,5 @@ func handleLeftHeavy(left, right, sideline []islander) simres {
 		} else {
 			return simres{left23[0], "light", numberOfSeesawMeasurements} // R1
 		}
-	}
-}
-func initIslanders() []islander {
-	var islanders []islander
-	for i := 0; i < 12; i++ {
-		newIslander := islander{
-			name:   fmt.Sprintf(("%d"), i+1),
-			weight: defaultWeight,
-		}
-		islanders = append(islanders, newIslander)
-	}
-	// make a random islander randomly heavier or lighter
-	islanders[getRandomNumber(0, len(islanders))].weight = getRandomNumber(80, 120)
-
-	return islanders
-}
-func getRandomNumber(min, max int) int {
-	rand.Seed(time.Now().UnixNano())
-	rndNumb := rand.Intn(max-min) + min
-	if rndNumb == defaultWeight {
-		rndNumb = getRandomNumber(min, max) // dont let it be the same as the default weight
-	}
-	return rndNumb
-}
-
-func seesaw(left, right []islander) string {
-	numberOfSeesawMeasurements++
-	leftTotaltWeight := 0
-	for _, islander := range left {
-		leftTotaltWeight += islander.weight
-	}
-	rightTotaltWeight := 0
-	for _, islander := range right {
-		rightTotaltWeight += islander.weight
-	}
-	if leftTotaltWeight == rightTotaltWeight {
-		return "balanced"
-	} else if leftTotaltWeight > rightTotaltWeight {
-		return "left"
-	} else {
-		return "right"
 	}
 }
