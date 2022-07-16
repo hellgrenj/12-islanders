@@ -25,22 +25,6 @@ func main() {
 	result := findOddIslander(islanders)
 	fmt.Printf("found %s islander %v (weight: %v) with %v seesaw measurements\n", result.diff, result.islander.name, result.islander.weight, result.numberOfSeesawMeasurements)
 }
-func findOddIslander(islanders []islander) simres {
-	numberOfSeesawMeasurements = 0
-	fmt.Printf("the islanders are: %v\n", islanders)
-	left := islanders[:4]       // L1 L2 L3 L4 (named after starting position)
-	right := islanders[4:8]     // R1 R2 R3 R4 (named after starting position)
-	sideline := islanders[8:12] // S1 S2 S3 S4 (named after starting position)
-	result := seesaw(left, right)
-	if result == "balanced" {
-		return handleBalanced(left, right, sideline)
-	} else if result == "left" {
-		return handleLeftHeavy(left, right, sideline)
-	} else { // right
-		// make sure you have the heavy side on the left... i.e pass in right as left and left as right
-		return handleLeftHeavy(right, left, sideline)
-	}
-}
 func initIslanders() []islander {
 	var islanders []islander
 	for i := 0; i < 12; i++ {
@@ -63,7 +47,22 @@ func getRandomNumber(min, max int) int {
 	}
 	return rndNumb
 }
-
+func findOddIslander(islanders []islander) simres {
+	numberOfSeesawMeasurements = 0
+	fmt.Printf("the islanders are: %v\n", islanders)
+	left := islanders[:4]       // L1 L2 L3 L4 (named after starting position)
+	right := islanders[4:8]     // R1 R2 R3 R4 (named after starting position)
+	sideline := islanders[8:12] // S1 S2 S3 S4 (named after starting position)
+	result := seesaw(left, right)
+	if result == "balanced" {
+		return handleBalanced(left, right, sideline)
+	} else if result == "left" {
+		return handleLeftHeavy(left, right, sideline)
+	} else { // right
+		// make sure you have the heavy side on the left... i.e pass in right as left and left as right
+		return handleLeftHeavy(right, left, sideline)
+	}
+}
 func seesaw(left, right []islander) string {
 	numberOfSeesawMeasurements++
 	leftTotaltWeight := 0
