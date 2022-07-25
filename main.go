@@ -55,7 +55,7 @@ func findOddIslander(islanders []islander) simres {
 	sideline := islanders[8:12] // S1 S2 S3 S4 (named after starting position)
 	result := seesaw(left, right)
 	if result == "balanced" {
-		return handleBalanced(left, right, sideline)
+		return handleBalanced(right, sideline)
 	} else if result == "left" {
 		return handleLeftHeavy(left, right, sideline)
 	} else { // right
@@ -81,7 +81,7 @@ func seesaw(left, right []islander) string {
 		return "right"
 	}
 }
-func handleBalanced(left, right, sideline []islander) simres {
+func handleBalanced(right, sideline []islander) simres {
 	// seesaw: L1 L2 L3 L4   R1 R2 R3 R4 (balanced)
 	// sideline: S1 S2 S3 S4
 	// now compare S1 S2 S3 with R1 R2 R3
@@ -90,8 +90,8 @@ func handleBalanced(left, right, sideline []islander) simres {
 	result2 := seesaw(left2, right2)
 
 	if result2 == "balanced" {
-		// seesaw: S1 S2 S3  R1 R2 R3  (balanced)
-		// sideline: L1 L2 L3 S4 L4 R4
+		// seesaw 2: S1 S2 S3  R1 R2 R3  (balanced)
+		// sideline 2: L1 L2 L3 S4 L4 R4
 		left21 := []islander{sideline[3]}
 		right21 := []islander{left2[0]}
 		// compare S4 with neutral L1
@@ -102,8 +102,8 @@ func handleBalanced(left, right, sideline []islander) simres {
 			return simres{sideline[3], "light", numberOfSeesawMeasurements} // light S4
 		}
 	} else if result2 == "left" {
-		// seesaw: S1 S2 S3 (heavy)  R1 R2 R3
-		// sideline: L1 L2 L3 S4 L4 R4
+		// seesaw 2: S1 S2 S3 (heavy)  R1 R2 R3
+		// sideline 2: L1 L2 L3 S4 L4 R4
 		left22 := []islander{left2[0]}
 		right22 := []islander{left2[1]}
 		// compare S1 with S2
@@ -116,8 +116,8 @@ func handleBalanced(left, right, sideline []islander) simres {
 			return simres{right22[0], "heavy", numberOfSeesawMeasurements} // S2
 		}
 	} else {
-		// seesaw: S1 S2 S3  R1 R2 R3 (heavy)
-		// sideline: L1 L2 L3 S4 L4 R4
+		// seesaw 2: S1 S2 S3  R1 R2 R3 (heavy)
+		// sideline 2: L1 L2 L3 S4 L4 R4
 		left23 := []islander{left2[0]}
 		right23 := []islander{left2[1]}
 		// compare S1 and S2
@@ -142,8 +142,8 @@ func handleLeftHeavy(left, right, sideline []islander) simres {
 	result2 := seesaw(left2, right2)
 	if result2 == "left" { // left still heavy
 		// we now know there is a heavy islander amongst L2 L3 and L4
-		// seesaw: R1 *L2 L3 L4*    L1 S2 S3 S4
-		// sideline: S1 R2 R3 R4
+		// seesaw 2: R1 *L2 L3 L4*    L1 S2 S3 S4
+		// sideline 2: S1 R2 R3 R4
 		left21 := []islander{left2[1]}
 		right21 := []islander{left2[2]}
 		// now compare L2 and L3
@@ -158,8 +158,8 @@ func handleLeftHeavy(left, right, sideline []islander) simres {
 
 	} else if result2 == "balanced" {
 		// we now know that the light islander is amongst R2 R3 and R4
-		// seesaw: R1 L2 L3 L4    L1 S2 S3 S4
-		// sideline: S1 *R2 R3 R4*
+		// seesaw 2: R1 L2 L3 L4    L1 S2 S3 S4
+		// sideline 2: S1 *R2 R3 R4*
 		left22 := []islander{sideline2[1]}
 		right22 := []islander{sideline2[2]}
 		// now compare R2 and R3
@@ -174,8 +174,8 @@ func handleLeftHeavy(left, right, sideline []islander) simres {
 
 	} else { // right side now heavy
 		// we now know it is either R1 or L1
-		// seesaw: *R1* L2 L3 L4    *L1* S2 S3 S4 (heavy)
-		// sideline: S1 R2 R3 R4
+		// seesaw 2: *R1* L2 L3 L4    *L1* S2 S3 S4 (heavy)
+		// sideline 2: S1 R2 R3 R4
 		left23 := []islander{left2[0]}
 		right23 := []islander{sideline2[0]} // known neutral islander ...
 		// now compare R1 against a neutral islander (S1 for example)
