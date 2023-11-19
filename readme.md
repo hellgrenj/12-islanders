@@ -4,9 +4,7 @@ Me and my wife sat down to try and solve the "12 islanders riddle" from Brooklyn
 
 ## the riddle
 
-*“There are 12 men on an island. 11 of them weigh the same and one of them is either slightly  
-heavier or slightly lighter. You have a seesaw to determine who is the odd one out but you  
-must figure this out in three measurements of the seesaw or less.”*  
+*“There are 12 men on an island. 11 of them weigh the same and one of them is either slightly heavier or slightly lighter. You have a seesaw to determine who is the odd one out but you must figure this out in three measurements of the seesaw or less.”*  
 
 ## our solution as code (simulation + test)
 (You need Go installed)  
